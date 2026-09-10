@@ -1,0 +1,18 @@
+# C++ executables
+*.exe
+*.out
+
+# Object files
+*.o
+*.obj
+
+# Debug/build files
+*.pdb
+*.ilk
+
+# VS Code
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
