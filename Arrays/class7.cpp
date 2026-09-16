@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 // Computing x^n i.e. x power n using BINARY EXPONENTIATION APPROACH
@@ -42,9 +43,30 @@ double binaryExpo(double x, long n) {
     return ans;
 }
 
+// Stock Buy and Sell Problem - using vectors
+int buySellStock(vector<int> prices) {
+    // the thought here is we first need to determine the best buy price and then only we can sell the stock and get the
+    // maximum profit out of it, for that we need maxprofit and bestbuy also we can just check the best selling price by
+    // comparing the maxprofit of the current index and the previous ones, also we dont need to find the besy buy
+    // separately we can just keep updating it until we find the minimum value of prices by comparing it to the current
+    // index value
+    int maxProfit = 0, bestBuy = prices[0];
+    for (int i = 0; i < prices.size(); i++) {
+        if (prices[i] > bestBuy) {
+            maxProfit = max(maxProfit, prices[i] - bestBuy);
+        };
+        bestBuy = min(bestBuy, prices[i]);
+    }
+    return maxProfit;
+}
+
 int main() {
     double x = 3;
     long n = -1;
+    vector<int> prices = {7, 1, 5, 3, 6, 4};
     // Binary Exponentiation Results
-    cout << "the results for x^n using binaryexpo is - " << binaryExpo(x, n);
+    cout << "the results for x^n using binaryexpo is - " << binaryExpo(x, n) << endl;
+
+    // stock buy and sell results
+    cout << "The max profit is - " << buySellStock(prices) << endl;
 }
