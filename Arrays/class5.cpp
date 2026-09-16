@@ -70,7 +70,7 @@ int mooreMJ(vector<int> elemVec) {
     int freq = 0, ans = elemVec[0]; // we start with 0 freq cuz we'll count it in loop
 
     for (int i = 0; i < size; i++) {
-        if (freq = 0) {
+        if (freq == 0) {
             ans = elemVec[i];
         }
         if (ans == elemVec[i]) {
