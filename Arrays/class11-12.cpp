@@ -37,6 +37,37 @@ int binSrchRecur(vector<int> arr, int target, int start, int end) {
     return -1;
 }
 
+// Rotated Sorted Array Problem using modifief Binary Search
+int rotatedBS(vector<int> rotArr, int target) {
+    int start = 0, end = rotArr.size() - 1;
+    while (start <= end) {
+        int mid = start + (end - start) / 2;
+
+        // if the target is simply at mid then return it already
+        if (rotArr[mid] == target)
+            return mid;
+
+        // first we'll check if whether left-half is sorted or right-half is sorted
+        if (rotArr[start] <= rotArr[mid]) { // then it is left-half sorted
+            // now we know that this part is sorted, so we'll check if the target exists here or not
+            if (rotArr[start] <= target && target <= rotArr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        } else { // right-half sorted
+
+            // same here, if this part is sorted, then we'll check if the target exists here or not
+            if (rotArr[mid] <= target && target <= rotArr[end]) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+    }
+    return -1;
+}
+
 int main() {
     vector<int> arr = {-1, 0, 4, 8, 9, 13, 19};
     int target = 13;
@@ -44,4 +75,7 @@ int main() {
 
     int start = 0, end = arr.size() - 1;
     cout << "output of binarySearchRecursion - O(logn) - arr[" << binSrchRecur(arr, target, start, end) << "]" << endl;
+
+    vector<int> rotArr = {3, 4, 5, 6, 7, 0, 1, 2};
+    cout << "output of rotated sorted array using binary search: rotArr[" << rotatedBS(rotArr, 0) << "]" << endl;
 }
