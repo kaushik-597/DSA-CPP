@@ -7,6 +7,7 @@ bool isValid(vector<int> &pagesArr, int totalStud, int books, int mid) {
     int maxAllowedPages = mid;
     int stud = 1, pages = 0; // starting with 1 student to allocate pages respectively
 
+    // this for loop as O(n)
     for (int i = 0; i < books; i++) {
         // edge case where the array holds a value that surpasses the max pages threshold
         if (pagesArr[i] > maxAllowedPages) {
@@ -46,7 +47,8 @@ int allocateBooks(vector<int> &pagesArr, int totalStud, int books) {
     }
     int start = 0, end = sum; // range of possible answers
 
-    while (start <= end) {
+    while (start <=
+           end) { // this while loop has O(log N * n) where N - range (start-end) and O(n) is complexity of isValid
         int mid = start + (end - start) / 2;
 
         // now we check if the mid is a valid answer or not, if it is then we check if there exists even a lower value
