@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -130,16 +131,58 @@ int paintBoards(vector<int> &timeArr, int totalPainters, int boards) {
     return ans;
 }
 
+// aggressive cows problem - similar to previous two's
+// here we have to assign C num of cows to N num of stalls so that the minimum distance of cows is the largest of all
+// the minimums to prevent bull-fighting, this thing will use sorting which we wont be doing manually we will use the
+// sort fxn itself
+bool isStallable(vector<int> &stallArr, int cnum, int n, int mid) {
+    int cows = 1, lastStall = stallArr[0], minDist = mid;
+
+    for (int i = 1; i < n; i++) {
+        if ((stallArr[i] - lastStall) >= minDist) {
+            cows++;
+            lastStall = stallArr[i];
+        }
+        if (cows == cnum)
+            return true;
+    }
+    return false;
+};
+
+int cowStall(vector<int> &stallArr, int cnum, int n) {
+    sort(stallArr.begin(), stallArr.end());
+    int start = 1, end = stallArr[n - 1] - stallArr[0], ans = -1;
+
+    while (start <= end) {
+        int mid = start + (end - start) / 2;
+        if (isStallable(stallArr, cnum, n, mid)) {
+            ans = mid;
+            // now that we have a possible answer but what there's another possible one with even larger distance,
+            // therefore we gonna find an even greater value and check if that is a possible answer or not
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return ans;
+}
+
 int main() {
     vector<int> pagesArr = {2, 1, 3, 4};
-    int totalStud = 2, books = 4;
+    int totalStud = 2, books = pagesArr.size();
 
     // the results for book allocation problem using binary search
     cout << "the min of max pages that can be allocated: " << allocateBooks(pagesArr, totalStud, books) << endl;
 
     vector<int> timeArr = {40, 30, 10, 20};
-    int totalPainters = 2, boards = 4;
+    int totalPainters = 2, boards = timeArr.size();
 
     // the results for book allocation problem using binary search
     cout << "the min out of the max time to paint all boards: " << paintBoards(timeArr, totalPainters, boards) << endl;
+
+    vector<int> stallArr = {1, 2, 8, 4, 9};
+    int cows = 3, n = stallArr.size();
+
+    // the results for book allocation problem using binary search
+    cout << "the largest distance out of the minimum distances btw stalls: " << cowStall(stallArr, cows, n) << endl;
 }
